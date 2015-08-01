@@ -12,6 +12,12 @@ public class PlayerController : MonoBehaviour {
 	public float tilt;
 	public Boundary boundary;
 
+	public GameObject shot;
+	public Transform shotSpawn;
+	public float fireRate;
+
+	private float nextFire;
+
 	// Update is called once per frame
 	void FixedUpdate () {
 		float moveHorizontal = Input.GetAxis ("Horizontal");
@@ -32,5 +38,12 @@ public class PlayerController : MonoBehaviour {
 			0.0f, 
 		    GetComponent<Rigidbody>().velocity.x * -tilt
 		);
+	}
+	
+	void Update() {
+		if (Input.GetButton("Fire1") && Time.time > nextFire) {
+			nextFire = Time.time + fireRate;
+			Instantiate(shot, shotSpawn.position, shotSpawn.rotation);
+		}
 	}
 }
